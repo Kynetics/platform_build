@@ -756,8 +756,10 @@ $(TARGET_BOOTLOADER_IMAGE):
 		$(MAKE) -C bootable/bootloader/uboot-imx/ distclean $(BOOTLOADER_ENV); \
 		$(MAKE) -C bootable/bootloader/uboot-imx/ $$UBOOT_CONFIG $(BOOTLOADER_ENV); \
 		$(MAKE) -C bootable/bootloader/uboot-imx/ $(BOOTLOADER_ENV); \
-		install -D bootable/bootloader/uboot-imx/u-boot.bin $(PRODUCT_OUT)/u-boot-$$UBOOT_PLATFORM.bin; \
-		install -D bootable/bootloader/uboot-imx/u-boot.bin $@; \
+		for extension in bin imx ; do \
+			install -D bootable/bootloader/uboot-imx/u-boot.$$extension $(PRODUCT_OUT)/u-boot-$$UBOOT_PLATFORM.$$extension; \
+			install -D bootable/bootloader/uboot-imx/u-boot.$$extension $(PRODUCT_OUT)/u-boot.$$extension; \
+		done \
 	done
 else
 bootloader:
